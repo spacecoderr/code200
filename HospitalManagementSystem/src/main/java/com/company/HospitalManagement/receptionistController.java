@@ -1,5 +1,8 @@
 package com.company.HospitalManagement;
 
+import com.company.HospitalManagement.appointment.appointment;
+import com.company.HospitalManagement.appointment.appointmentService;
+import com.company.HospitalManagement.invoice.invoice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
