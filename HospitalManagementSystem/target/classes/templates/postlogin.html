@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="2;url=/showPostLogin">
+    <title>Authenticating... | HMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @keyframes custom-spin {
+            to { transform: rotate(360deg); }
+        }
+        .animate-slow-spin {
+            animation: custom-spin 2s linear infinite;
+        }
+    </style>
 </head>
-<body>
-post login
+<body class="bg-slate-50 min-h-screen flex items-center justify-center">
+
+<div class="text-center p-8 bg-white rounded-3xl shadow-xl border border-slate-100 max-w-sm w-full">
+    <div class="relative inline-block mb-8">
+        <div class="w-24 h-24 border-4 border-slate-100 border-t-blue-600 rounded-full animate-spin"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <i class="fas fa-hospital-symbol text-blue-600 text-3xl opacity-20 animate-pulse"></i>
+        </div>
+    </div>
+
+    <h2 class="text-2xl font-bold text-slate-800 mb-2 tracking-tight">Verifying Credentials</h2>
+    <p class="text-slate-500 text-sm leading-relaxed">
+        Preparing your personalized dashboard... <br>
+        <span class="text-xs font-mono text-slate-300 mt-2 block">Redirecting to Hospital Service</span>
+    </p>
+
+    <div class="mt-10 opacity-0 hover:opacity-100 transition-opacity duration-500 cursor-default">
+        <div class="inline-flex items-center gap-2 bg-slate-100 px-4 py-2 rounded-full border border-slate-200">
+            <i class="fas fa-user-shield text-slate-400 text-[10px]"></i>
+            <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest"
+                  th:text="${#authentication.authorities}">[ROLE_PENDING]</span>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    // JavaScript fallback to ensure the user isn't stuck
+    window.onload = function() {
+        setTimeout(function() {
+            window.location.href = /*[[@{/showPostLogin}]]*/ '/showPostLogin';
+        }, 1500);
+    };
+</script>
+
 </body>
 </html>

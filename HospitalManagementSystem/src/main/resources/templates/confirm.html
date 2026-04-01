@@ -1,25 +1,54 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"    xmlns:th="http://www.thymeleaf.org">
-<body style="background-color:powderblue;">
-<hr> <hr>
-	<H1 align="center">HOSPITAL SWERSIE</H1>
-	<hr> 
-<div align="center">
-        <h1>Create New Appointment</h1>
-        <br />
-        <form action="#" th:action="@{/confirm}" th:object="${confirmation}">
- 
-            <table border="0" cellpadding="10">
-                <tr>
-                    <td>Appointment id:</td>
-                    <td><input type="text" th:field="*{appointment_id}" /></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><button type="submit">Save</button> </td>
-                </tr>
-            </table>
-        </form>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Appointment | Receptionist Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center py-12 px-4">
+
+<div class="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md border border-slate-200">
+    <div class="text-center mb-8">
+        <div class="h-16 w-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+            <i class="fas fa-calendar-check"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-slate-800">Verify Appointment</h1>
+        <p class="text-slate-500 mt-2">Enter the ID to mark as <span class="font-bold text-green-600 uppercase text-xs">Confirmed</span></p>
     </div>
+
+    <form th:action="@{/confirm}" th:object="${confirmation}" method="post" class="space-y-6">
+
+        <div>
+            <label class="block text-xs font-bold text-slate-400 uppercase mb-2 ml-1 tracking-wider">Target Appointment ID</label>
+            <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-300">
+                        <i class="fas fa-hashtag"></i>
+                    </span>
+                <input type="number" th:field="*{appointment_id}" required
+                       class="w-full pl-10 pr-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-blue-400 focus:ring-0 outline-none transition font-mono text-lg"
+                       placeholder="0000">
+            </div>
+        </div>
+
+        <div class="pt-4 flex flex-col gap-3">
+            <button type="submit"
+                    class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-green-100 transition-all active:scale-95 flex items-center justify-center gap-2">
+                <i class="fas fa-check"></i> Finalize Confirmation
+            </button>
+
+            <a th:href="@{/receptionist/receptionistAppointments}"
+               class="w-full text-center text-slate-400 hover:text-slate-600 text-sm font-semibold transition py-2">
+                Back to appointment list
+            </a>
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

@@ -1,108 +1,115 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset='utf-8' content="Cory Sanoy" name="Author" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Schedule | Static View</title>
 
-	<link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.css" 
-			th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" rel="stylesheet"></link>
-	<link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.print.css" 
-			th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.print.css}" rel="stylesheet" media="print"></link>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"
-	        th:src="@{/webjars/momentjs/2.9.0/min/moment.min.js}" type="text/javascript"></script>
-	<script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
-	        th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
-	<script src="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"
-			th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}" type="text/javascript"></script>
+    <link rel="stylesheet" th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" />
+    <link rel="stylesheet" th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.print.css}" media="print" />
 
-<script>
-<!--
-$(document).ready(function() {
+    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/momentjs/2.9.0/min/moment.min.js}"></script>
+    <script th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}"></script>
 
-	$('#calendar').fullCalendar({
-		defaultDate: '2014-11-01',
-		editable: true,
-		eventLimit: true, // allow "more" link when too many events
-		events: [
-			{
-				title: 'All Day Event',
-				start: '2014-11-01'
-			},
-			{
-				title: 'Long Event',
-				start: '2014-11-07',
-				end: '2014-11-10'
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: '2014-11-09T16:00:00'
-			},
-			{
-				id: 999,
-				title: 'Repeating Event',
-				start: '2014-11-16T16:00:00'
-			},
-			{
-				title: 'Conference',
-				start: '2014-11-11',
-				end: '2014-11-13'
-			},
-			{
-				title: 'Meeting',
-				start: '2014-11-12T10:30:00',
-				end: '2014-11-12T12:30:00'
-			},
-			{
-				title: 'Lunch',
-				start: '2014-11-12T12:00:00'
-			},
-			{
-				title: 'Meeting',
-				start: '2014-11-12T14:30:00'
-			},
-			{
-				title: 'Happy Hour',
-				start: '2014-11-12T17:30:00'
-			},
-			{
-				title: 'Dinner',
-				start: '2014-11-12T20:00:00'
-			},
-			{
-				title: 'Birthday Party',
-				start: '2014-11-13T07:00:00'
-			},
-			{
-				title: 'Click for Google',
-				url: 'http://google.com/',
-				start: '2014-11-28'
-			}
-		]
-	});
-	
-});
--->
-</script>
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                // Updated to 2026 to match your current system year
+                defaultDate: '2026-04-01',
+                editable: false, // Set to false for a purely static/read-only view
+                eventLimit: true,
+                events: [
+                    {
+                        title: 'Cardiology Seminar',
+                        start: '2026-04-01',
+                        color: '#2563eb'
+                    },
+                    {
+                        title: 'Surgery - Room A',
+                        start: '2026-04-07',
+                        end: '2026-04-10',
+                        color: '#dc2626'
+                    },
+                    {
+                        title: 'Staff Meeting',
+                        start: '2026-04-12T10:30:00',
+                        end: '2026-04-12T12:30:00',
+                        color: '#059669'
+                    },
+                    {
+                        title: 'Maintenance',
+                        start: '2026-04-12T13:00:00',
+                        color: '#4b5563'
+                    },
+                    {
+                        title: 'Dr. Bijoy Shift',
+                        start: '2026-04-16T08:00:00',
+                        end: '2026-04-16T16:00:00'
+                    },
+                    {
+                        title: 'Hospital Gala',
+                        url: 'https://hospital-gala-2026.com',
+                        start: '2026-04-28',
+                        color: '#7c3aed'
+                    }
+                ]
+            });
+        });
+    </script>
 
-<style>
-
-	body {
-		margin: 40px 10px;
-		padding: 0;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-		font-size: 14px;
-	}
-
-	#calendar {
-		max-width: 900px;
-		margin: 0 auto;
-	}
-
-</style>			
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .calendar-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .header-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header-box h1 {
+            color: #1e40af;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .back-link:hover { color: #2563eb; }
+    </style>
 </head>
 <body>
-	<div id='calendar' th:id="calendar"></div>
+
+<div class="calendar-container">
+    <div class="header-box">
+        <a th:href="@{/main}" class="back-link">&larr; Back to System Dashboard</a>
+        <h1>Global Event Calendar</h1>
+        <p style="color: #94a3b8; font-size: 14px;">Static Reference View</p>
+    </div>
+    <div id='calendar'></div>
+</div>
+
 </body>
 </html>

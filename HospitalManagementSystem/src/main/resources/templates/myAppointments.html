@@ -1,45 +1,102 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Your appointments</title>
-<style>
-table,th,td{
-border: 1px solid black;
-padding: 3px;
-text-align: center;
-}
-table{
-border-spacing: 5px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Appointments | Hospital Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
 </head>
-<body style="background-color:powderblue;">
-<hr> <hr>
-	<H1 align="center">HOSPITAL SWERSIE</H1>
-	<hr>
-	<a th:href="@{/patients}">homepage</a>
-	 <hr>
-	<br>
-	<br>
-       
-        <table style="width:100%">
-        <caption>Your appointments</caption>
-        <tr>
-            <th>AppointmentID</th>
-            <th>Patient Name</th>
-            <th>Doctor Name</th>
-            <th>Appointment Date</th>
-            <th>Confirmation</th>
-        </tr>
-        <tr th:each="appointment : ${listAppointments}">
-            <td th:text="${appointment.appointment_id}"></td>
-          	<td th:text="${appointment.patientName}"></td>
-          	<td th:text="${appointment.doctorName}"></td>
-          	<td th:text="${appointment.date}"></td>
-          	<td th:text="${appointment.confirmed}"></td>
-        </tr>
-    </table>
+<body class="bg-slate-50 min-h-screen">
+
+<nav class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center gap-2 text-blue-600 font-bold text-xl">
+        <i class="fas fa-heartbeat"></i>
+        <span>HOSPITAL SERVICE</span>
+    </div>
+    <div class="flex gap-4 items-center">
+        <a th:href="@{/patients}" class="text-sm font-semibold text-slate-500 hover:text-blue-600 transition">
+            <i class="fas fa-arrow-left mr-1"></i> Dashboard
+        </a>
+        <a th:href="@{/appointments/add}" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-blue-700 transition">
+            <i class="fas fa-plus mr-1"></i> Book New
+        </a>
+    </div>
+</nav>
+
+<main class="max-w-5xl mx-auto py-12 px-6">
+
+    <div th:if="${message}"
+         class="mb-8 p-4 rounded-2xl border flex items-center gap-3 shadow-md"
+         th:classappend="${alertClass == 'alert-success' ? 'bg-green-50 border-green-200 text-green-700' : 'bg-blue-50 border-blue-200 text-blue-700'}">
+        <i class="fas fa-check-circle fa-lg"></i>
+        <div>
+            <p class="font-bold">Update</p>
+            <p class="text-sm opacity-90" th:text="${message}">Action successful!</p>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <h2 class="text-3xl font-bold text-slate-800 tracking-tight">Your Appointments</h2>
+        <p class="text-slate-500">View and track your scheduled visits with our specialists.</p>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-50 border-b border-slate-200">
+            <tr>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">ID</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Patient</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Doctor</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Date</th>
+                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider text-center">Status</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+            <tr th:each="appointment : ${listAppointments}" class="hover:bg-slate-50 transition-colors">
+                <td class="px-6 py-4 text-sm font-mono text-slate-400" th:text="${appointment.appointment_id}"></td>
+                <td class="px-6 py-4 font-semibold text-slate-700" th:text="${appointment.patientName}"></td>
+                <td class="px-6 py-4 text-slate-600">
+                    <i class="fas fa-user-md mr-2 text-blue-400 opacity-70"></i>
+                    <span th:text="${appointment.doctorName}"></span>
+                </td>
+                <td class="px-6 py-4 text-slate-600" th:text="${appointment.date}"></td>
+                <td class="px-6 py-4 text-center">
+                    <span th:if="${appointment.confirmed == 'confirmed'}"
+                          class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200">
+                        <i class="fas fa-check-circle mr-1"></i> Confirmed
+                    </span>
+                    <span th:if="${appointment.confirmed == 'pending'}"
+                          class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 border border-amber-200">
+                        <i class="fas fa-clock mr-1"></i> Pending
+                    </span>
+                    <span th:if="${appointment.confirmed != 'confirmed' and appointment.confirmed != 'pending'}"
+                          class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-500 border border-slate-200"
+                          th:text="${appointment.confirmed}">
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${#lists.isEmpty(listAppointments)}" class="py-24 text-center">
+            <i class="fas fa-calendar-times text-slate-200 fa-4x mb-4"></i>
+            <h3 class="text-slate-800 font-bold text-lg">No Schedule Found</h3>
+            <p class="text-slate-400 font-medium">You haven't booked any appointments yet.</p>
+            <a th:href="@{/appointments/add}" class="mt-6 inline-block text-blue-600 font-bold hover:underline text-sm">
+                Book your first visit &rarr;
+            </a>
+        </div>
+    </div>
+</main>
+
+<footer class="mt-20 py-10 border-t border-slate-200 text-center text-slate-400 text-xs">
+    Hospital Management System &bull; Patient Terminal v2.1
+</footer>
+
 </body>
 </html>
