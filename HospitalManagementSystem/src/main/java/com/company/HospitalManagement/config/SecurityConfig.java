@@ -51,14 +51,23 @@ public class SecurityConfig {
 
         // Helper to add users to our in-memory list
 
-        users.add(createUser(encoder, "marry", "test123", "USER", "RECEPTIONIST","DOCTOR"));
-        users.add(createUser(encoder, "bijoy", "test123", "USER", "DOCTOR","RECEPTIONIST"));
-        users.add(createUser(encoder, "damon", "test123", "USER", "DOCTOR","RECEPTIONIST"));
+        // Existing Users
+        users.add(createUser(encoder, "marry", "test123", "USER", "RECEPTIONIST"));
+        users.add(createUser(encoder, "bijoy", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+        users.add(createUser(encoder, "damon", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+
+// --- ADDING THE NEW DOCTORS FROM YOUR SCHEDULE ---
+        users.add(createUser(encoder, "ananya", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+        users.add(createUser(encoder, "raj", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+        users.add(createUser(encoder, "meera", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+        users.add(createUser(encoder, "arjun", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+        users.add(createUser(encoder, "house", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+
+// Existing Patients
         users.add(createUser(encoder, "walter", "test123", "USER", "PATIENT"));
         users.add(createUser(encoder, "varshaa", "test123", "USER", "PATIENT"));
         users.add(createUser(encoder, "pradeep", "test123", "USER", "PATIENT"));
         users.add(createUser(encoder, "rupa", "test123", "USER", "PATIENT"));
-
         return new InMemoryUserDetailsManager(users);
     }
 

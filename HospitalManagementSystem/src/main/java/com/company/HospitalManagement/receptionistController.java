@@ -1,5 +1,7 @@
 package com.company.HospitalManagement;
 
+import com.company.HospitalManagement.CalendarApplication.Event;
+import com.company.HospitalManagement.CalendarApplication.EventJpaRepository;
 import com.company.HospitalManagement.appointment.appointment;
 import com.company.HospitalManagement.appointment.appointmentService;
 import com.company.HospitalManagement.invoice.invoice;

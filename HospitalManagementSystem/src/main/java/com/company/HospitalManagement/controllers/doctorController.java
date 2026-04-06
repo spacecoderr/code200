@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.List;
 
 @Controller
@@ -23,21 +22,36 @@ public class doctorController {
         String doctorName = authentication.getName();
         List<appointment> doctorAppointments = service.findByDoctorName(doctorName);
         model.addAttribute("doctorAppointments", doctorAppointments);
-        return "doctorAppointments"; // Removed .html extension
+        return "doctorAppointments";
     }
 
     @GetMapping("/createPrescription")
     public String showPrescriptionForm(@RequestParam("id") Integer id, Model model) {
-        model.addAttribute("appointmentId", id);
-        return "createPrescription";
+        // Fetch the existing appointment
+        appointment appt = service.getAppointmentById(id);
+
+        // Pass it to the model as 'prescription' to match th:object in varsha.html
+        model.addAttribute("prescription", appt);
+        return "varsha";
     }
 
     @PostMapping("/savePrescription")
-    public String savePrescription(@RequestParam("id") Integer id,
-                                   @RequestParam("prescription") String prescription,
+    public String savePrescription(@RequestParam("appointment_id") Integer id,
+                                   @RequestParam("prescription") String prescriptionText, // Changed parameter name to match HTML
                                    RedirectAttributes ra) {
-        service.setPrescription(prescription, id);
-        ra.addFlashAttribute("message", "Prescription updated successfully!");
+
+        // 1. Fetch the existing appointment
+        appointment appt = service.getAppointmentById(id);
+
+        // 2. Update the prescription field
+        appt.setPrescription(prescriptionText);
+
+        // 3. Save the updated appointment
+        service.save(appt);
+
+        ra.addFlashAttribute("message", "Prescription for " + appt.getPatientName() + " saved successfully!");
+        ra.addFlashAttribute("alertClass", "alert-success");
+
         return "redirect:/doctors/doctorAppointments";
     }
 }

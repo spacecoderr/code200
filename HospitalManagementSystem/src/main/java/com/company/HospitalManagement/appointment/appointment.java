@@ -1,13 +1,17 @@
 package com.company.HospitalManagement.appointment;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.DynamicUpdate;
 
+@Getter
 @Entity
 @Table(name="appointment")
 @DynamicUpdate
 public class appointment {
 
+    // Getters and Setters...
+    // Ensure these remain exactly as they are to avoid breaking Thymeleaf links!
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="appointment_id")
@@ -42,23 +46,15 @@ public class appointment {
         this.confirmed = confirmed;
     }
 
-    // Getters and Setters...
-    // Ensure these remain exactly as they are to avoid breaking Thymeleaf links!
-    public Integer getAppointment_id() { return appointment_id; }
     public void setAppointment_id(Integer appointment_id) { this.appointment_id = appointment_id; }
 
-    public String getPatientName() { return patientName; }
     public void setPatientName(String patientName) { this.patientName = patientName; }
 
-    public String getDoctorName() { return doctorName; }
     public void setDoctorName(String doctorName) { this.doctorName = doctorName; }
 
-    public String getDate() { return date; }
     public void setDate(String date) { this.date = date; }
 
-    public String getPrescription() { return prescription; }
     public void setPrescription(String prescription) { this.prescription = prescription; }
 
-    public String getConfirmed() { return confirmed; }
     public void setConfirmed(String confirmed) { this.confirmed = confirmed; }
 }

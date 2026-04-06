@@ -6,7 +6,7 @@
     <title>New Appointment | Hospital Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
@@ -14,69 +14,88 @@
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
 <header class="bg-white shadow-sm py-6">
-    <h1 class="text-center text-3xl font-bold text-blue-600 uppercase tracking-widest flex items-center justify-center gap-3">
-        <i class="fas fa-hospital-symbol"></i> Hospital Management System
+    <h1 class="text-center text-3xl font-black text-blue-600 uppercase tracking-tighter flex items-center justify-center gap-3">
+        <i class="fas fa-heartbeat text-red-500 animate-pulse"></i> HOSPITAL SERVICE
     </h1>
 </header>
 
 <main class="flex-grow flex items-center justify-center py-12 px-4">
-    <div class="bg-white p-10 rounded-3xl shadow-xl w-full max-w-lg border border-slate-100">
+    <div class="bg-white p-10 rounded-[2.5rem] shadow-2xl w-full max-w-lg border border-slate-100">
         <div class="text-center mb-8">
-            <h2 class="text-2xl font-bold text-slate-800">Schedule a Visit</h2>
-            <p class="text-slate-500 mt-2">Enter the appointment details below.</p>
+            <h2 class="text-3xl font-black text-slate-800 tracking-tight">Schedule a Visit</h2>
+            <p class="text-slate-400 font-medium mt-1">Enter the appointment details below.</p>
         </div>
 
-        <form th:action="@{/appointments/save}" th:object="${appointment}" method="post" class="space-y-5">
+        <form th:action="@{/appointments/save}" th:object="${appointment}" method="post" class="space-y-6">
 
             <input type="hidden" th:field="*{confirmed}" />
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 ml-1">Patient Name</label>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2 ml-1 tracking-widest">Patient Name</label>
                 <input type="text" th:field="*{patientName}" required
-                       class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-blue-400 focus:ring-0 outline-none transition"
-                       placeholder="Full name of patient">
+                       class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-400 focus:ring-4 focus:ring-blue-50 outline-none transition font-semibold text-slate-700"
+                       placeholder="Enter your full name">
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 ml-1">Doctor Name</label>
-                <input type="text" th:field="*{doctorName}" required
-                       class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-blue-400 focus:ring-0 outline-none transition"
-                       placeholder="e.g. Dr. Strange">
-            </div>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2 ml-1 tracking-widest">
+                    Preferred Doctor
+                </label>
+                <div class="relative">
+                    <select th:field="*{doctorName}" required
+                            class="w-full px-5 py-4 bg-white border-2 border-slate-100 rounded-2xl focus:border-blue-400 focus:ring-4 focus:ring-blue-50 outline-none transition appearance-none cursor-pointer font-bold text-slate-700 shadow-sm text-sm">
 
+                        <option value="" selected disabled>Choose a doctor and shift...</option>
+
+                        <option th:each="e : ${schedules}"
+                                th:value="${e.name}"
+                                th:text="${e.name + ' | ' + e.title + ' (' + e.description + ')'}">
+                        </option>
+                    </select>
+
+                    <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-slate-400">
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+            </div>
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 ml-1">Appointment Date</label>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2 ml-1 tracking-widest">Consultation Date</label>
                 <input type="date" th:field="*{date}" required
-                       class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-blue-400 focus:ring-0 outline-none transition">
+                       class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-400 focus:ring-4 focus:ring-blue-50 outline-none transition font-bold text-slate-700">
             </div>
 
             <div>
-                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 ml-1">Prescription Required?</label>
-                <select th:field="*{prescription}"
-                        class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-blue-400 focus:ring-0 outline-none transition appearance-none">
-                    <option value="yes">Yes (Initial Consultation)</option>
-                    <option value="no">No (Follow-up)</option>
-                </select>
+                <label class="block text-[10px] font-black text-slate-400 uppercase mb-2 ml-1 tracking-widest">Visit Type</label>
+                <div class="relative">
+                    <select th:field="*{prescription}"
+                            class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-400 focus:ring-4 focus:ring-blue-50 outline-none transition appearance-none cursor-pointer font-bold text-slate-700">
+                        <option value="yes">Yes (Initial Consultation)</option>
+                        <option value="no">No (Follow-up / Routine)</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-slate-400">
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="pt-6">
                 <button type="submit"
-                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-100 transition-all active:scale-95">
-                    <i class="fas fa-check-circle mr-2"></i> Confirm Appointment
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-widest text-xs py-5 rounded-2xl shadow-2xl shadow-blue-100 transition-all active:scale-95 flex items-center justify-center gap-3">
+                    <i class="fas fa-check-circle text-lg"></i> Confirm Appointment
                 </button>
             </div>
 
             <div class="text-center mt-4">
-                <a th:href="@{/appointments/myAppointments}" class="text-sm font-semibold text-slate-400 hover:text-red-500 transition">
-                    <i class="fas fa-times mr-1"></i> Cancel and go back
+                <a th:href="@{/appointments/myAppointments}" class="text-[10px] font-black text-slate-300 hover:text-red-500 transition uppercase tracking-widest">
+                    <i class="fas fa-times-circle mr-1"></i> Cancel and go back
                 </a>
             </div>
         </form>
     </div>
 </main>
 
-<footer class="py-8 text-center text-slate-400 text-xs">
-    &copy; 2026 Hospital Management System &bull; Secure Booking Terminal
+<footer class="py-8 text-center text-slate-300 text-[10px] font-bold uppercase tracking-[0.3em]">
+    &copy; 2026 HMS Secure Terminal &bull; Hospital Intelligence System
 </footer>
 
 </body>

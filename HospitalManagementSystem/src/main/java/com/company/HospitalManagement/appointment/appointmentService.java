@@ -2,16 +2,22 @@ package com.company.HospitalManagement.appointment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // ADD THIS
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional // ADD THIS: Required for @Modifying repository queries
+@Transactional
 public class appointmentService {
 
     @Autowired
     private appointmentRepository bookAppointment;
+
+    // --- NEW: Added this for your Prescription Controller ---
+    public appointment getAppointmentById(Integer id) {
+        return bookAppointment.findById(id)
+                .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + id));
+    }
 
     public List<appointment> listAll(){
         return bookAppointment.findAll();
@@ -25,11 +31,11 @@ public class appointmentService {
         bookAppointment.deleteById(id);
     }
 
-    // This method will now work perfectly with @Transactional
-    public int setConfirmation(String confirmation, Integer id) {
-        return bookAppointment.setConfirmation(confirmation, id);
+    public void setConfirmation(String confirmation, Integer id) {
+        bookAppointment.setConfirmation(confirmation, id);
     }
 
+    // This is used by your savePrescription method in the controller
     public int setPrescription(String prescription, Integer id) {
         return bookAppointment.setPrescription(prescription, id);
     }
