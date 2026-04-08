@@ -12,8 +12,9 @@ public class prescriptionService {
     @Autowired
     private prescriptionRepository repository;
 
-    public void save(prescription p) {
-        repository.save(p);
+    // CHANGED: Now returns the prescription object instead of void
+    public prescription save(prescription p) {
+        return repository.save(p);
     }
 
     public List<prescription> findByPatientName(String patientName) {

@@ -11,48 +11,52 @@ import java.util.Optional;
 public class appointmentService {
 
     @Autowired
-    private appointmentRepository bookAppointment;
+    private appointmentRepository appointmentRepo; // Renamed from 'bookAppointment' for clarity
 
-    // --- NEW: Added this for your Prescription Controller ---
+    /**
+     * Required for Prescription Controller and Tests.
+     * Returns the appointment or throws an error if not found.
+     */
     public appointment getAppointmentById(Integer id) {
-        return bookAppointment.findById(id)
+        return appointmentRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Appointment not found with id: " + id));
     }
 
-    public List<appointment> listAll(){
-        return bookAppointment.findAll();
+    /**
+     * Returns the saved appointment.
+     * This fixes the "void cannot be converted" error in your tests!
+     */
+    public appointment save(appointment appt) {
+        return appointmentRepo.save(appt);
     }
 
-    public void save(appointment appointment) {
-        bookAppointment.save(appointment);
+    public List<appointment> listAll() {
+        return appointmentRepo.findAll();
     }
 
     public void delete(Integer id) {
-        bookAppointment.deleteById(id);
+        appointmentRepo.deleteById(id);
     }
 
     public void setConfirmation(String confirmation, Integer id) {
-        bookAppointment.setConfirmation(confirmation, id);
+        appointmentRepo.setConfirmation(confirmation, id);
     }
 
-    // This is used by your savePrescription method in the controller
     public int setPrescription(String prescription, Integer id) {
-        return bookAppointment.setPrescription(prescription, id);
+        return appointmentRepo.setPrescription(prescription, id);
     }
 
-    public Optional<appointment> get(Integer id) {
-        return bookAppointment.findById(id);
-    }
+    // --- Cleaned up Duplicate Methods ---
 
     public List<appointment> findByPatientName(String patientName) {
-        return bookAppointment.findByPatientName(patientName);
+        return appointmentRepo.findByPatientName(patientName);
     }
 
     public List<appointment> findByDoctorName(String doctorName) {
-        return bookAppointment.findByDoctorName(doctorName);
+        return appointmentRepo.findByDoctorName(doctorName);
     }
 
-    public List<appointment> findByDate(String date, String doctorName){
-        return bookAppointment.findByDate(date, doctorName);
+    public List<appointment> findByDate(String date, String doctorName) {
+        return appointmentRepo.findByDate(date, doctorName);
     }
 }

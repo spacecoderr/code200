@@ -21,6 +21,7 @@ public class doctorController {
     public String showDoctorAppointments(Model model, Authentication authentication) {
         String doctorName = authentication.getName();
         List<appointment> doctorAppointments = service.findByDoctorName(doctorName);
+        System.out.println("DEBUG: Found " + doctorAppointments.size() + " appointments for doctor: " + doctorName);
         model.addAttribute("doctorAppointments", doctorAppointments);
         return "doctorAppointments";
     }

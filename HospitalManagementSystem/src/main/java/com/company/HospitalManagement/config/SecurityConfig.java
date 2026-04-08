@@ -53,7 +53,7 @@ public class SecurityConfig {
 
         // Existing Users
         users.add(createUser(encoder, "marry", "test123", "USER", "RECEPTIONIST"));
-        users.add(createUser(encoder, "bijoy", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
+        users.add(createUser(encoder, "Dr. Bijoy", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
         users.add(createUser(encoder, "damon", "test123", "USER", "DOCTOR", "RECEPTIONIST"));
 
 // --- ADDING THE NEW DOCTORS FROM YOUR SCHEDULE ---

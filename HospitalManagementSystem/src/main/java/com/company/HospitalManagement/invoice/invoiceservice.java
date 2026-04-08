@@ -12,8 +12,9 @@ public class invoiceservice {
     @Autowired
     private invoiceRepository rep;
 
-    public void save(invoice entity) {
-        rep.save(entity);
+    // CHANGED: Now returns the saved invoice
+    public invoice save(invoice entity) {
+        return rep.save(entity);
     }
 
     public List<invoice> findAll() {
